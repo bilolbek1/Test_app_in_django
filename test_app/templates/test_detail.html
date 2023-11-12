@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .test_h1{
+        font-weight: bold;
+        font-family: Courier;
+        color: wheat;
+        margin: 15px;
+        text-align: center;
+    }
+    body{
+    background-color: black !important;
+}
+
+.form-group label{
+    color: white;
+    font-size: 1.7vw;
+    font-weight: bold;
+    font-family: Monospace;
+    margin-bottom: 1vw;
+    letter-spacing:0.1cap;
+}
+.form-check .form-check{
+    width: 70vw;
+    height: 2vw;
+    background-color: azure;
+    margin-bottom: 0.3vw;
+    border: 2px solid white;
+    border-radius: 3px;
+    box-shadow: rgba(232, 227, 227, 0.24) 0px 6px 12px;
+    background-color: black;
+
+}
+
+.form-check .form-check .form-check-input{
+    width: 1vw;
+    height: 1vw;
+}
+.form-check .form-check .form-check-label{
+    font-size: 1vw;
+    font-weight: bolder;
+    font-family: Courier;
+    color: aquamarine;
+}
+
+#displaytimer{
+    color: black;
+    position: fixed;
+    margin-left: 73vw;
+    width: 15vw;
+    font-weight: lighter;
+    height: 2.5vw;
+    background-color: white;
+    text-align: center;
+    border: 2px solid yellow;
+    box-shadow: rgba(255, 255, 0, 0.24) 0px 6px 12px;
+    font-family: Fantasy;
+    font-size: 1.5vw;
+}
+.test_btn{
+    width: 10vw;
+    height: 3vw;
+    color: white;
+    border: 2px solid white;
+    background-color: black;
+    box-shadow: rgba(247, 247, 245, 0.24) 0px 6px 12px;
+    margin-bottom: 5vw;
+    font-family: Courier;
+    font-weight: bolder;
+    font-size: 1.5vw;
+    border-radius: 0;
+    margin-left: 30vw;
+}
+.test_btn:hover{
+    color: yellow;
+    border:2px solid yellow;
+}
+</style>
+
+<div class="container ">
+<h1 class="test_h1">Welcome to {{ test.name }} Quiz</h1>
+
+<div align="right " id="displaytimer"><b>Timer: 0 seconds</b></div>
+    <form method='post' action=''>
+    {% csrf_token %}
+    {% for q  in questions%}
+    <div class="form-group">
+      <label for="question">{{q.question}}</label>
+    </div>
+    <div class="form-check">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="{{q.question}}" id="gridRadios1" value="{{ q.op1 }}" checked>
+            <label class="form-check-label" for="gridRadios1">
+                {{q.op1}}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="{{q.question}}" id="gridRadios2" value="{{ q.op2 }}">
+            <label class="form-check-label" for="gridRadios2">
+                {{q.op2}}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="{{q.question}}" id="gridRadios1" value="{{ q.op3 }}">
+            <label class="form-check-label" for="gridRadios1">
+                {{q.op3}}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="{{q.question}}" id="gridRadios2" value="{{ q.op4 }}">
+            <label class="form-check-label" for="gridRadios2">
+                {{q.op4}}
+            </label>
+        </div>
+        <br>
+    </div>
+        <hr style="color: white; height: 2px">
+    {% endfor %}
+    <input id='timer' type='hidden' name="timer" value="">
+    <br>
+    <button type="submit" class="test_btn btn">Submit</button>
+  </form>
+
+    {% block script %}
+        <script>
+
+            console.log('hello world')
+            const timer=document.getElementById('displaytimer')
+            console.log(timer.textContent)
+            const inputtag = document.getElementById('timer')
+
+            t=0
+            setInterval(()=>{
+                t+=1
+                timer.innerHTML ="<b>Timer: " +t+" seconds</b>"
+                inputtag.value = t
+
+
+            },1000)
+        </script>
+    {% endblock script %}
+</div>
+{% endblock content %}

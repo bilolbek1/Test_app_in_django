@@ -18,7 +18,7 @@ class Test(models.Model):
 
 
 class Questions(models.Model):
-    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE, null=True)
     question = models.CharField(max_length=200, null=True)
     op1 = models.CharField(max_length=200,null=True)
     op2 = models.CharField(max_length=200,null=True)
